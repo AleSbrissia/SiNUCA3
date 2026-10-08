@@ -28,11 +28,11 @@
 
 /** @brief Buffers renamed instructions for future selection and issue. */
 class Scheduler : public Component<SchedulerPacket> {
+
   private:
     CircularBuffer issueQueue;
     unsigned long numberOfInstructions;
 
-    /** @brief Receives instructions and stores them in the issue queue. */
     void ReceiveInstructions();
 
   public:

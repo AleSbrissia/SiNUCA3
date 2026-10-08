@@ -231,11 +231,7 @@ void Renaming::RobDispatcher() {
     rbx = this->rob.GetRobFirstInstruction(&packet, &newprd, &oldprd, &spr1,
                                            &spr2, &isFloat, &dispatched,
                                            &executed);
-    // scheduler executa?? / ROB recebe wb_uop das UF's 
     
-    /* erro: ROB Fazendo o Schoreboard; ele apenas deve receber o sinal de executado
-     * 
-     */
     while (rbx != -1) {
         if (dispatched == false) {
             if (isFloat == false) {
@@ -263,7 +259,6 @@ void Renaming::RobDispatcher() {
         rbx = this->rob.GetRobNextInstruction(&packet, &newprd, &oldprd, &spr1,
                                               &spr2, &isFloat, &dispatched,
                                               &executed);
-        // nova instrucao para o Scheduler (coloca na issue queue) 
     }
 }
 

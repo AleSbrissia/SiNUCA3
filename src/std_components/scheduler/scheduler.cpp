@@ -32,8 +32,11 @@ int Scheduler::Configure(Config config) {
 
 void Scheduler::ReceiveInstructions() {
     long numberOfConnections = this->GetNumberOfConnections();
+
     for (long i = 0; i < numberOfConnections; ++i) {
+
         SchedulerPacket packet;
+
         while (this->ReceiveRequestFromConnection(i, &packet) == 0) {
             this->issueQueue.Enqueue(&packet);
             ++this->numberOfInstructions;
