@@ -38,7 +38,7 @@ void CircularBuffer::Allocate(int bufferSize, int elementSize) {
 
     this->maxBufferSize = bufferSize;
 
-    if (bufferSize == 0) {
+    if (bufferSize <= 0) {
         this->buffer = (void*)malloc(defaultBufferSize * elementSize);
         this->bufferSize = defaultBufferSize;
     } else {
@@ -130,6 +130,32 @@ int CircularBuffer::Dequeue(void* elementOutput) {
     memset(elementOutput, 0, this->elementSize);
 
     return 1;
+}
+
+int CircularBuffer::GetFirstElement(void* elementOutput) {
+    if (!this->IsEmpty()) {
+        void* memoryAddress = static_cast<char*>(this->buffer) +
+                              (this->startOfBuffer * this->elementSize);
+
+        memcpy(elementOutput, memoryAddress, this->elementSize);
+
+        return 0;
+    }
+
+    memset(elementOutput, 0, this->elementSize);
+
+    return 1;
+}
+
+void CircularBuffer::Pop() {
+    if (!this->IsEmpty()) {
+        --this->occupation;
+        ++this->startOfBuffer;
+
+        if (this->startOfBuffer == this->bufferSize) {
+            this->startOfBuffer = 0;
+        }
+    }
 }
 
 void CircularBuffer::Flush() {
